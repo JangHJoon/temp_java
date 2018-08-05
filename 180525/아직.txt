@@ -1,0 +1,87 @@
+https://d2.naver.com/helloworld/1219
+
+이야기가 나온 김에 한 가지 더 짚고 넘어가자. 
+Java 7, Java SE 7, JDK 7 등의 용어가 혼용되는데 이들의 차이점은 무엇일까?
+
+Java SE는 Java Platform, Standard Edition의 약자로, 
+Java Platform의 근간을 이루는 '명세(Specification)'를 가리킨다. 
+JDK는 Java Development Kit의 약자로, 앞에서 말한 '명세'의 '구현체'를 가리킨다고 보면 된다. 
+즉, Java SE 7은 JSR-336로 규정된 Java SE의 7번째 명세를 가리키는 용어이고, 
+JDK 7은 그 구현체, 이를테면 OpenJDK JDK 7, Oracle JDK 7과 같은 것을 가리키는 것이다.
+
+그런데 JDK 7은 Java SE 7이 확정되기 전에 개발되었다. 
+OpenJDK에서 명세와 구현을 동시에 진행하고 그 결과가 JSR(Java Specification Request)에 반영되어 명세가 결정되는 순서로 진행되었던 것이다. 
+그래서인지 Java SE 7보다는 JDK 7이라는 용어가 훨씬 더 많이 사용되었다. 
+따라서 여기에서도 Java SE 7보다는 JDK 7이라는 용어를 사용하도록 하겠다.
+
+
+
+Plan B
+그런데 JDK 7이 릴리스되기 전부터 JDK 8에 대한 이야기가 들려오기 시작했다. 
+어떻게 된 것일까?
+Java SE 6까지 Java SE는 약 2년을 주기로 메이저 버전이 릴리스되어 왔다. 
+그래서 Java SE 7도 Java SE 6이 릴리스된 지 약 2년 후, 
+그러니까 2008년 말이나 늦어도 2009년 중에는 릴리스될 것이라 생각되었다. 
+그러나 Oracle이 Sun을 인수하는 등 여러 일로 인해 JDK 7 개발은 자꾸 지연되었고, 
+이대로는 2012년에나 완성될 것이라고 예측하기도 했다. 
+결국 2010년 9월, Oracle의 Mark Reinhold는 마무리되어가고 있는 명세를 모아 2011년에 JDK 7으로 릴리스하고 
+나머지는 2012년 말에 릴리스할 JDK 8으로 미루자는 Plan B를 제안했다. 
+그리고 Oracle은 이 제안을 채택하여 2010년 JavaOne에서 공식적으로 Plan B 채택을 발표했다.
+
+JDK 8으로 미뤄진 프로젝트는 Project Coin의 일부와 Project Lambda, Project Jigsaw 등이다. 
+Project Lambda는 Java 언어에 Closure를 도입하는 것으로 자바 언어의 표현력을 크게 높일 수 있는 반면 
+함수형 언어에 익숙하지 않은 개발자들을 혼란에 빠뜨릴 수 있다. 
+Generics 이후 최대의, 어쩌면 Generics보다 더 큰 언어적 변화를 가져올 수 있는 프로젝트이다.
+
+Project Jigsaw는 JDK 클래스 라이브러리 자체를 모듈화하는 것을 목표로, 
+Java 클래스들을 묶어 모듈을 구성할 수 있도록 하는 프로젝트이다. 
+여기서 모듈은 패키지나 JAR과는 다른 것으로, OSGi의 모듈과 비슷하다고 할 수 있다.
+
+이 두 프로젝트는 규모가 크고, 그만큼 많은 사람들의 관심을 끌고 있다. 
+이들에 비하면 JDK 7에 포함된 프로젝트는 미미해 보일 정도이다. 
+아쉽기는 하지만, 그래도 JDK 7에는 꽤 유용한 기능들이 남아 있다. 
+지금부터 JDK 7에서 만나볼 수 있는 기능들을 찬찬히 살펴보도록 하겠다.
+
+
+
+Project Coin
+
+1. Binary integrals and underscores in numeric literals
+
+private static final long TIMEOUT = 3600_000;  
+private static final int BINARY_VALUE = 0b1001_0110_1100_0011;  
+
+
+2. Strings in switch
+
+public void handle(String code, Something arg) {  
+switch (code) {  
+case "INSERT":  
+handleInsert(arg);  
+break;  
+case "DELETE":  
+handlerDelete(arg);  
+break;  
+default:  
+throw new IllegalArgumentException();  
+}
+}
+
+3. Improved Type Inference for Generic Instance Creation (diamond)
+
+import java.util.*;
+public class VaragrgsEx {
+	public static void main(String[] args) {
+
+	Map<String, Object> foo = new HashMap<String, Object>();  
+	Map<String, Object> bar = new HashMap<String, Object>(); 
+	Map<String, Object> bar2 = new HashMap<String, Object>(); 
+	List<Map <String,Object>> result = Arrays.asList(foo, bar, bar2); 
+
+	System.out.println(result);
+
+	}
+}
+
+
+
